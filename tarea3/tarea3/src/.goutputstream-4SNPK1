@@ -1,0 +1,94 @@
+/* 5265175 */ // sustituiir con los 7 dígitos de la cédula
+
+#include "../include/aplicaciones.h"
+#include "../include/cadena.h"
+#include "../include/iterador.h"
+
+void insertarAcad(TCadena &cad,TAbb a){
+	if(a == NULL){}
+	else if(a != NULL){
+	  insertarAcad(cad,derecho(a));
+	  cad = insertarAlInicio(natInfo(raiz(a)),realInfo(raiz(a)),cad);
+	  insertarAcad(cad,izquierdo(a));
+    }
+}
+	
+TCadena linealizacion(TAbb abb) {
+	TCadena cadena = crearCadena();
+	insertarAcad(cadena,abb);
+return cadena;
+}
+
+void imprimir(int prof,TAbb a){
+	if(a!=NULL){
+	  imprimir(prof+1,derecho(a));	
+	  for(int i=0;i<prof;i++)
+	  printf("-");
+	  imprimirInfo(raiz(a));
+	  printf("\n");
+   	  imprimir(prof+1,izquierdo(a));
+     }
+}     
+
+void imprimirAbb(TAbb abb) {
+	 int prof = 0;
+	 imprimir(prof,abb);
+    }        
+
+int nivelAux(int nivel,TAbb a){
+	if(a!=NULL){
+		if(izquierdo(a)!=NULL){
+	      nivelAux(nivel+1,izquierdo(a));
+	     }
+	else if(derecho(a)!=NULL){
+		  nivelAux(nivel+1,derecho(a));
+		 }
+       }
+  return nivel;
+}         	        
+		
+bool esPerfecto(TAbb abb) {
+	int nivel=0;
+	bool esPerf=true;
+	if (abb == NULL) esPerf = true;
+
+	else if (abb != NULL){
+		 if(nivelAux(nivel,izquierdo(abb)) != nivelAux(nivel,derecho(abb)))
+		  esPerf = false;
+		  else esPerf = true;
+	}
+	return esPerf;
+}
+
+TAbb menores(double limite, TAbb abb) {
+	TAbb mIzq,mDer,nuevo;
+	TInfo iMayor,iRaiz;
+	if(abb == NULL)
+	   nuevo = NULL;
+	else{
+		mIzq = menores(limite,izquierdo(abb));
+		mDer = menores(limite,derecho(abb));
+		iRaiz = raiz(abb);
+		if (limite < realInfo(iRaiz)){
+			 nuevo = consAbb(iRaiz,mIzq,mDer);
+		}
+		else if(mIzq == NULL)
+		       nuevo = mDer;
+		else if(mDer==NULL)
+		       nuevo = mIzq;
+		else{
+			iMayor = mayorEnAbb(mIzq);
+			removerDeAbb(natInfo(iMayor),mIzq);
+			nuevo = consAbb(iMayor,mIzq,mDer);
+		}
+	}
+return nuevo;			
+}
+
+TIterador caminoAscendente(nat clave, nat k, TAbb abb) { return NULL; }
+
+void imprimirPalabrasCortas(nat k, TPalabras palabras) {}
+
+TPalabras buscarFinPrefijo(ArregloChars prefijo, TPalabras palabras) {
+  return NULL;
+}
